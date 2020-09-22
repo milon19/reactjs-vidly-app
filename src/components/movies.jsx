@@ -3,6 +3,14 @@ import { getMovies } from "../services/fakeMovieService";
 
 class Movies extends Component {
   state = { movies: getMovies() };
+
+  handleDelete = (movie) => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies.splice(index, 1);
+    this.setState({ movies });
+  };
+
   render() {
     const { length: count } = this.state.movies;
     const { movies } = this.state;
@@ -29,10 +37,15 @@ class Movies extends Component {
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
                 <td>
-                  <i class="fa fa-heart-o"></i>
+                  <i className="fa fa-heart-o"></i>
                 </td>
                 <td>
-                  <button className="btn btn-sm btn-danger">Delete</button>
+                  <button
+                    onClick={() => this.handleDelete(movie)}
+                    className="btn btn-sm btn-danger"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
