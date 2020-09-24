@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 class Like extends Component {
   render() {
-    const { movie, onLiked } = this.props;
+    const { movie, onLike } = this.props;
     return (
       <i
         style={{ cursor: "pointer" }}
         className={this.getClasses()}
-        onClick={() => onLiked(movie)}
+        onClick={() => onLike(movie)}
       ></i>
     );
   }
