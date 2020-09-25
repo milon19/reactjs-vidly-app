@@ -7,11 +7,20 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/pagination";
 
 class Movies extends Component {
-  state = { movies: [], genres: [], currentPage: 1, pageSize: 4 };
+  state = {
+    movies: [],
+    genres: [],
+    currentPage: 1,
+    pageSize: 4,
+  };
 
   componentDidMount() {
-    const genres = [{ _id: "", name: "All Movies" }, ...getGenres()];
-    this.setState({ movies: getMovies(), genres });
+    const genres = [{ _id: "all", name: "All Movies" }, ...getGenres()];
+    this.setState({
+      movies: getMovies(),
+      genres,
+      selectedGenre: { _id: "all", name: "All Movies" },
+    });
   }
 
   handleDelete = (movie) => {
@@ -46,7 +55,7 @@ class Movies extends Component {
     } = this.state;
 
     const filtered =
-      selectedGenre && selectedGenre._id
+      selectedGenre._id !== "all"
         ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
         : allMovies;
 
