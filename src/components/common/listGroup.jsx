@@ -17,9 +17,7 @@ const ListGroup = (props) => {
           key={item[valueProperty]}
           onClick={() => onItemSelect(item)}
           className={
-            selectedItem._id === item._id
-              ? "list-group-item active"
-              : "list-group-item"
+            selectedItem === item ? "list-group-item active" : "list-group-item"
           }
         >
           {item[textProperty]}
