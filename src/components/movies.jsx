@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import { getMovies } from "../services/fakeMovieService";
 // import { getGenres } from "../services/fakeGenreService";
-import { getMovies, deleteMovie } from "../services/movieService";
+import { getMovies, deleteMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
@@ -56,10 +56,16 @@ class Movies extends Component {
     movies[index] = { ...movies[index] };
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
+    console.log("Movie --->", movies[index]);
+    saveMovie(movies[index]);
   };
 
   handleGenreSelect = (genre) => {
-    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
+    this.setState({
+      selectedGenre: genre,
+      searchQuery: "",
+      currentPage: 1,
+    });
   };
 
   handlePageChange = (page) => {
@@ -89,9 +95,9 @@ class Movies extends Component {
       filtered = allMovies.filter((m) =>
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    else if (selectedGenre && selectedGenre._id)
-      filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
-
+    else if (selectedGenre && selectedGenre._id) {
+      filtered = allMovies.filter((m) => m.genre_obj._id === selectedGenre._id);
+    }
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
     const movies = paginate(sorted, currentPage, pageSize);
 

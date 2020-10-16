@@ -16,12 +16,21 @@ export function saveMovie(movie) {
   if (movie._id) {
     const body = { ...movie };
     delete body._id;
-
-    http.put(apiEndpoint + movie._id + "/", body);
+    console.log(movie);
+    http.put(apiEndpoint + movie._id + "/", body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } else {
+    http.post(apiEndpoint, movie, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
-  http.post(apiEndpoint, movie);
 }
 
 export function deleteMovie(id) {
-  http.delete(apiEndpoint + id);
+  http.delete(apiEndpoint + id + "/");
 }
